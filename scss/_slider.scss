@@ -1,0 +1,49 @@
+/* Main Slider area css
+============================================================================================ */
+.slider_area{ 
+    background: url("../img/slider.jpg") no-repeat;
+    background-position: center;  
+    background-size: cover;
+    .slider_inner{
+        position: relative;
+        height: 100vh;
+        .image-change{ 
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0;
+            right: 0;
+            h2{
+                font: 700 72px/60px $fira;
+                color: #e71f2c;
+            }
+            h5{
+                font-size: 24px;
+                font-family: $muli;
+                padding-bottom: 55px;
+                color: #e71f2c;
+                padding-top: 40px;
+            } 
+            .learn-more{
+                text-transform: uppercase;
+                color: #e71f2c;
+                font: 700 16px/50px $fira;
+                width: 250px;
+                text-align: center;
+                border-radius: 30px;
+                background: $hover;
+                display: block;
+                margin: 0 auto;
+                &:hover, &:focus{
+                    background: #e71f2c;
+                    color: $heading;
+                }
+            } 
+        }
+    }
+} 
+/* End Main Slider area css
+============================================================================================ */ 
+ 
+
