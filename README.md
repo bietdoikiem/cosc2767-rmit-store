@@ -1,6 +1,6 @@
 # secret-project
 
-<img src="https://i.imgur.com/LVMMJ0r.png">
+<img src="https://i.imgur.com/LVMMJ0r.png" width=500>
 
 
 ## 1. MariaDB/MySQL Database
