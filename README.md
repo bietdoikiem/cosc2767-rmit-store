@@ -1,5 +1,7 @@
 # secret-project
 
+<img src="https://i.imgur.com/LVMMJ0r.png">
+
 
 ## 1. MariaDB/MySQL Database
 
