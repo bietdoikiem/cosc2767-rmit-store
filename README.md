@@ -1,6 +1,6 @@
 # secret-project
 <p align="center">
-    <img src="https://i.imgur.com/LVMMJ0r.png" width=700>
+    <img src="https://i.imgur.com/LVMMJ0r.png" width=600>
 </p>
 
 ## 1. MariaDB/MySQL Database
