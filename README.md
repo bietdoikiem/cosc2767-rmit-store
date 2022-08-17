@@ -1,9 +1,5 @@
 # secret-project
 
-```
-sudo yum install -y git
-git clone <git-repo-url>
-```
 
 port:3306
 ```
@@ -32,6 +28,11 @@ sudo service httpd start
 sudo systemctl enable httpd
 ```
 
+```
+sudo yum install -y git
+git clone <git-repo-url> /var/www/html/
+```
+
 localhost?
 ```
 $link = mysqli_connect(
@@ -42,3 +43,4 @@ $link = mysqli_connect(
 );
 ```
 
+<img src="https://i.imgur.com/xNHx6Ue.png">
