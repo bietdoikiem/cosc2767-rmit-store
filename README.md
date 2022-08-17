@@ -27,6 +27,7 @@ MariaDB > exit
 ```
 
 ```
+sudo yum install -y httpd php php-mysql
 sudo service httpd start
 sudo systemctl enable httpd
 ```
