@@ -96,7 +96,7 @@
                   "rmit_store_db"
               );
               if ($link) {
-                  $res = mysqli_query($link, "select * from stores;");
+                  $res = mysqli_query($link, "select * from store;");
                   while ($row = mysqli_fetch_assoc($res)) { ?>
 
 
