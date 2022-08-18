@@ -3,7 +3,7 @@
     <img src="https://i.imgur.com/OtlK2qU.png" width=600>
 </p>
 
-This is the RMIT Store built on LAMP stack (Linux, Apache, MySQL, PHP).
+This is the RMIT Store built on the LAMP stack (Linux, Apache, MySQL, PHP).
 
 Here is the instructions to setup the website on CentOS/Linux EC2 instance:
 
