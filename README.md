@@ -84,7 +84,7 @@ Note: Notice the "localhost" and change it accordingly!
 
 Open the website via the public IP address or the domain name!
 
-Screenshot of the website
+Behold, it's time to buy some RMIT glorious merchandise!
 <img src="https://i.imgur.com/xNHx6Ue.png">
 
 Profit💸💰! Sweet and simple to deploy this website!
