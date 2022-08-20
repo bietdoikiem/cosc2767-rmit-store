@@ -1,4 +1,4 @@
-# RMIT Store
+# RMIT Store 🛍️
 <p align="center">
     <img src="https://i.imgur.com/OtlK2qU.png" width=600>
 </p>
@@ -7,7 +7,7 @@ This is the RMIT Store built on the LAMP stack (Linux, Apache, MySQL, PHP).
 
 Here is the instructions to setup the website on CentOS/Linux EC2 instance:
 
-## 1. MariaDB/MySQL Database
+## 📙 1. MariaDB/MySQL Database
 
 You need to install a relational database installed to store and manage your data.
 
@@ -21,7 +21,7 @@ sudo systemctl enable mariadb
 ```
 MariaDB or MySQL listens to the default port number 3306.
 
-## 2. Run SQL Script
+## 📜 2. Run SQL Script
 
 Open MariaDB console and run these SQL script to populate the database user, create database "rmit_store_db", the table "store" and populate rows in the table.
 ```
@@ -41,7 +41,7 @@ MariaDB > exit
 ```
 Note: Notice the "localhost" and change it accordingly!
 
-## 3. Install PHP and php-mysql module
+## ⚙️ 3. Install PHP and php-mysql module
 
 PHP is the scripting language of our setup that will process code to display dynamic content to the user. 
 
@@ -50,7 +50,7 @@ In addition to the php package, you’ll need php-mysql, a PHP module that allow
 sudo yum install -y php php-mysql
 ```
 
-## 4. Install Apache server
+## 🛠️ 4. Install Apache server
 
 You need to install Apache server to serve your content.
 ```
@@ -59,7 +59,7 @@ sudo service httpd start
 sudo systemctl enable httpd
 ```
 
-## 5. Git clone the website from Github to the root folder of Apache
+## 💡 5. Git clone the website from Github to the root folder of Apache
 
 You need to fork this Github repo first to your Github account.
 
@@ -80,9 +80,14 @@ $link = mysqli_connect(
 ```
 Note: Notice the "localhost" and change it accordingly!
 
-## 6. Open the website
+## 💻 6. Open the website
 
 Open the website via the public IP address or the domain name!
 
 Screenshot of the website
 <img src="https://i.imgur.com/xNHx6Ue.png">
+
+Profit! Sweet and simple to deploy this website!
+
+## 🏆 Author
+- Huynh Nguyen Minh Thong - tomhuynhsg@gmail.com
