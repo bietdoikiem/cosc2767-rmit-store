@@ -87,7 +87,7 @@ Open the website via the public IP address or the domain name!
 Screenshot of the website
 <img src="https://i.imgur.com/xNHx6Ue.png">
 
-Profit! Sweet and simple to deploy this website!
+Profit💸💰! Sweet and simple to deploy this website!
 
 ## 🏆 Author
 - Huynh Nguyen Minh Thong - tomhuynhsg@gmail.com
