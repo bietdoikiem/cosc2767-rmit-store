@@ -90,4 +90,4 @@ Behold, it's time to buy some RMIT glorious merchandise!
 Profit💸💰! Sweet and simple to deploy this website!
 
 ## 🏆 Author
-- Huynh Nguyen Minh Thong - tomhuynhsg@gmail.com
+- Huynh Nguyen Minh Thong (Tom Huynh) - tomhuynhsg@gmail.com
