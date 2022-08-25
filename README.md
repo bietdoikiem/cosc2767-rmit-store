@@ -82,7 +82,7 @@ Note: Notice the "localhost" and change it accordingly!
 
 ## 💻 6. Open the website
 
-Open the website via the public IP address or the domain name!
+Open the website via the public IP address or the domain name via the default port http 80!
 
 Behold, it's time to buy some RMIT glorious merchandise!
 <img src="https://i.imgur.com/xNHx6Ue.png">
