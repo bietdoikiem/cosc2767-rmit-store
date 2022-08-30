@@ -1,5 +1,5 @@
 {
-	"name": "phpunit",
+	"name": "php-actions/phpunit-test-1",
 	"description": "Testing php-actions/phpunit",
 
 	"require-dev": {
