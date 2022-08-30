@@ -1,19 +1,19 @@
 <?php
 namespace App\Test;
 
-use App\Greeter;
+use App\Green;
 
-class GreeterTest extends \PHPUnit\Framework\TestCase {
-	public function testGreeterSaysHello() {
-		$greeter = new Greeter();
+class GreenTest extends \PHPUnit\Framework\TestCase {
+	public function testGreenSaysHello() {
+		$green = new Green();
 		self::assertStringContainsString(
 			"Hello",
-			$greeter->greet()
+			$green->greet()
 		);
 	}
 
 	public function testGreeterUsesName() {
-		$greeter = new Greeter();
+		$greeter = new Green();
 
 		self::assertStringContainsString(
 			"Hello, Cody",
