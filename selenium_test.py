@@ -8,6 +8,7 @@ chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).in
 
 chrome_options = Options()
 options = [
+    "--headless",
     "--disable-gpu",
     "--ignore-certificate-errors",
     "--disable-extensions",
