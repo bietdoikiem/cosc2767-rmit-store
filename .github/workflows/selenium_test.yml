@@ -21,6 +21,9 @@ jobs:
         
     - name: Installed package list
       run: apt list --installed
+      
+    - name: Install software
+      run: sudo apt install -y chromium-browser
     
     - name: Install all necessary packages
       run: pip install requests webdriver-manager selenium
