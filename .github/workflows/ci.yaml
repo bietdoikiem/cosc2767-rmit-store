@@ -12,6 +12,7 @@ env:
   # Docker Hub
   REGISTRY: docker.io
   IMAGE_NAME: ${{ github.repository }}
+  PHP_VERSION: 8
 
 jobs:
   unit-test:
@@ -101,7 +102,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          context: ./bin/${{ env.PHPVERSION }}
+          context: ./bin/php${{ env.PHP_VERSION }}
           file: ./Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
