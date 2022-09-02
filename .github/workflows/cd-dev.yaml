@@ -26,7 +26,6 @@ jobs:
       - name: Pull and Run new version of image as Docker container
         uses: appleboy/ssh-action@master
         with:
-          # TODO: Remember to add secrets for EC2 Dev server tomorrow!
           host: ${{ secrets.WEBAPP_HOST_DEV }}
           username: ${{ secrets.WEBAPP_USERNAME_DEV }}
           key: ${{ secrets.WEBAPP_SSH_KEY_DEV }}
