@@ -17,13 +17,14 @@ jobs:
   unit-test:
     name: PHPUnit Test
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 
       - uses: php-actions/composer@v6
 
-      - name: Run PHPUnit tests
-        uses: php-actions/php
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@v3
         with:
           bootstrap: vendor/autoload.php
           configuration: test/phpunit.xml
