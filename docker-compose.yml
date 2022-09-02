@@ -20,7 +20,6 @@ services:
     environment:
       APACHE_DOCUMENT_ROOT: /var/www/html
      
-     
   database:
     build:
       context: "./bin/${DATABASE}"

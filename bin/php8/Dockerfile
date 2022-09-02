@@ -28,7 +28,13 @@ RUN apt-get -y update && \
     zip \
     openssl && \
     rm -rf /var/lib/apt/lists/* && \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    curl -sS https://getcomposer.org/installer | php && \ 
+    mv composer.phar /usr/local/bin/composer
+
+# Install PHPUnit
+RUN wget -O phpunit.phar https://phar.phpunit.de/phpunit-9.phar && \
+    chmod +x phpunit.phar && \
+    mv phpunit.phar /usr/local/bin/phpunit
 
 
 # Other PHP8 Extensions

@@ -1,0 +1,41 @@
+name: cd-dev
+
+on:
+  push:
+    branches:
+      - 'dev'
+
+env:
+  # Docker Hub
+  REGISTRY: docker.io
+  IMAGE_NAME: ${{ github.repository }}
+  CONTAINER_NAME: store-webapp
+  APP_PORT: 80
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull and Run new version of image as Docker container
+        uses: appleboy/ssh-action@master
+        with:
+          # TODO: Remember to add secrets for EC2 Dev server tomorrow!
+          host: ${{ secrets.WEBAPP_HOST_DEV }}
+          username: ${{ secrets.WEBAPP_USERNAME_DEV }}
+          key: ${{ secrets.WEBAPP_SSH_KEY_DEV }}
+          port: ${{ secrets.WEBAPP_PORT_DEV }}
+          script: |
+            docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
+            docker pull ${{ env.IMAGE_NAME }}:latest
+            docker stop ${{ CONTAINER_NAME }}
+            docker rm -f ${{ CONTAINER_NAME }}
+            docker run \ 
+            -e APACHE_DOCUMENT_ROOT='/var/www/html' \
+            -p ${{ APP_PORT }}:80 \
+            -d ${{ env.IMAGE_NAME }}:latest
