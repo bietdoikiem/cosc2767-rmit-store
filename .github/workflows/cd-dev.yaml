@@ -26,7 +26,6 @@ jobs:
       - name: Pull and Run new version of image as Docker container
         uses: appleboy/ssh-action@master
         with:
-          # TODO: Remember to add secrets for EC2 Dev server tomorrow!
           host: ${{ secrets.WEBAPP_HOST_DEV }}
           username: ${{ secrets.WEBAPP_USERNAME_DEV }}
           key: ${{ secrets.WEBAPP_SSH_KEY_DEV }}
@@ -36,7 +35,7 @@ jobs:
             docker pull ${{ env.IMAGE_NAME }}:latest
             docker stop ${{ env.CONTAINER_NAME }}
             docker rm -f ${{ env.CONTAINER_NAME }}
-            docker run \ 
+            docker run \
             -e APACHE_DOCUMENT_ROOT='${{ env.DOCUMENT_ROOT }}' \
             -p ${{ env.APP_PORT }}:80 \
             -d ${{ env.IMAGE_NAME }}:latest
