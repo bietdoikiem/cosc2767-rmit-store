@@ -30,26 +30,26 @@ jobs:
           configuration: test/phpunit.xml
           args: --coverage-text
 
-  selenium-test:
-    name: Selenium Test
-    needs: unit-test # Need unit-test to be success
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+  # selenium-test:
+  #   name: Selenium Test
+  #   needs: unit-test # Need unit-test to be success
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v2
+  #       with:
+  #         python-version: '3.9'
 
-      - name: Installed package list
-        run: apt list --installed
+  #     - name: Installed package list
+  #       run: apt list --installed
 
-      - name: Install all necessary packages
-        run: pip install requests webdriver-manager selenium
+  #     - name: Install all necessary packages
+  #       run: pip install requests webdriver-manager selenium
 
-      - name: Run the scraping script
-        run: python selenium_test.py
+  #     - name: Run the scraping script
+  #       run: python selenium_test.py
 
   build:
     runs-on: ubuntu-latest
