@@ -30,7 +30,7 @@ jobs:
           host: ${{ secrets.WEBAPP_HOST_DEV }}
           username: ${{ secrets.WEBAPP_USERNAME_DEV }}
           key: ${{ secrets.WEBAPP_SSH_KEY_DEV }}
-          port: ${{ secrets.WEBAPP_PORT_DEV }}
+          port: 22 # Default SSH Port
           script: |
             docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
             docker pull ${{ env.IMAGE_NAME }}:latest
