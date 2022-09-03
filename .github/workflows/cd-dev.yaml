@@ -38,4 +38,4 @@ jobs:
             docker run \
             -e APACHE_DOCUMENT_ROOT='${{ env.DOCUMENT_ROOT }}' \
             -p ${{ env.APP_PORT }}:80 \
-            -d ${{ env.IMAGE_NAME }}:latest
+            -d --name ${{ env.CONTAINER_NAME }} ${{ env.IMAGE_NAME }}:latest
