@@ -50,7 +50,7 @@ RUN a2enmod ssl && a2enmod rewrite
 # Enable apache modules
 RUN a2enmod rewrite headers
 
-RUN git clone https://github.com/TomHuynhSG/cosc2767-rmit-store.git /var/www/html
+COPY ~/cosc2767-rmit-store/* lamp-php8:/var/www/html
 
 # Cleanup
 RUN rm -rf /usr/src/*
