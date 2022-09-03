@@ -79,6 +79,6 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
-          context: ./bin/php${{ env.PHP_VERSION }}
+          file: ./bin/php${{ env.PHP_VERSION }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
