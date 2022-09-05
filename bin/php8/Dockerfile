@@ -52,5 +52,12 @@ RUN a2enmod rewrite headers
 
 COPY . /var/www/html
 
+# Define ENV variables
+ENV RDS_HOSTNAME database-1.cppfmv33xzl9.us-east-1.rds.amazonaws.com
+ENV RDS_USERNAME admin
+ENV RDS_PASSWORD ngomyquynh
+ENV RDS_DB_NAME rmit_store_db
+ENV RDS_PORT 3306
+
 # Cleanup
 RUN rm -rf /usr/src/*
