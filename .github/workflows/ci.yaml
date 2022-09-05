@@ -4,9 +4,15 @@ on:
   push:
     branches:
       - 'feat'
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
   pull_request:
     branches:
       - 'feat'
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
 
 env:
   # Docker Hub
