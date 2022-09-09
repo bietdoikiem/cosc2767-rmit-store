@@ -1,2 +1,4 @@
 
 .DS_Store
+test/uitests/__pycache__
+test/uitests/.pytest_cache
