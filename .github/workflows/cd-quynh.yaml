@@ -1,3 +1,10 @@
+name: cd-quynh
+
+on:
+  push:
+    branches:
+      - 'helm-charts'
+
 stages:
   - build
   - deploy
