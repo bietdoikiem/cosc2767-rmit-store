@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.service import Service
 @pytest.fixture
 def browser():
     #change web url here if needed test local
-    url = f"http://54.152.49.220/"
+    url = f"http://54.85.101.87/"
     chrome_options = Options()
 
     options = [

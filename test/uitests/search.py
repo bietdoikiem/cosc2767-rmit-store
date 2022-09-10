@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 class RMITSearchPage:
     # URL
     # change web url here if needed test local
-    URL = "http://54.152.49.220/"
+    URL = "http://54.85.101.87/"
 
     # Locators
     CLOTH_BTN = (By.XPATH, '//*[@id="bs-example-navbar-collapse-1"]/div[1]/ul/li[1]/a')
