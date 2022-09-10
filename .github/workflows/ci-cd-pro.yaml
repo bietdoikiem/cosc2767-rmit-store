@@ -81,7 +81,6 @@ jobs:
           key: ${{ secrets.WEBAPP_SSH_KEY_DEV }}
           port: 22 # Default SSH Port
           script: |
-            aws eks --region ${{ env.REGION }} update-kubeconfig --name ${{ env.CLUSTER_NAME }}
             helm upgrade rmitstore heml-charts --install --set-string image.tag=${{ steps.meta.outputs.tags }} --timeout 30m0s
             helm repo update
 
