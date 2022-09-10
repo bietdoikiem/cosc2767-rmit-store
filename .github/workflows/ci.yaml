@@ -4,9 +4,15 @@ on:
   push:
     branches:
       - 'feat'
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
   pull_request:
     branches:
       - 'feat'
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
 
 env:
   # Docker Hub
@@ -54,7 +60,6 @@ jobs:
           # Set output parameters.
           echo ::set-output name=tags::${TAGS}
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
-
       # Install signing lib for Docker image (except on PR)
       - name: Install cosign
         if: github.event_name != 'pull_request'

@@ -39,6 +39,7 @@ RUN wget -O phpunit.phar https://phar.phpunit.de/phpunit-9.phar && \
 
 # Other PHP8 Extensions
 RUN docker-php-ext-install pdo_sqlite && \
+    docker-php-ext-install pdo_mysql && \
     docker-php-ext-install mysqli 
 
 # Insure an SSL directory exists

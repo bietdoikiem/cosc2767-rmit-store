@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - 'dev'
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
 
 env:
   # Docker Hub
@@ -37,5 +40,10 @@ jobs:
             docker rm -f ${{ env.CONTAINER_NAME }}
             docker run \
             -e APACHE_DOCUMENT_ROOT='${{ env.DOCUMENT_ROOT }}' \
+            -e RDS_HOSTNAME='${{ secrets.RDS_HOSTNAME_DEV }}' \
+            -e RDS_USERNAME='${{ secrets.RDS_USERNAME_DEV }}' \
+            -e RDS_PASSWORD='${{ secrets.RDS_PASSWORD_DEV }}' \
+            -e RDS_DB_NAME='${{ secrets.RDS_DB_NAME_DEV }}' \
+            -e RDS_PORT='${{ secrets.RDS_PORT_DEV }}' \
             -p ${{ env.APP_PORT }}:80 \
             -d --name ${{ env.CONTAINER_NAME }} ${{ env.IMAGE_NAME }}:latest
