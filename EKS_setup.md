@@ -6,9 +6,9 @@ Here is the instructions to setup the eks with auto-balancing and auto-scaling u
 
 ## 📙 0. Set up necessary configuration for the kubernetes
 
-Before making any further adjustment, you need to add the following policies to the your roles which places in foldere aws/policies
+Before making any further adjustment, you need to add the following policies to the your roles which places in folder aws/policies
 
-Moreover, you also need to set up the aws.cli, kubectl, eksctl and helm install by running the run.sh script
+Moreover, you also need to set up the aws.cli, kubectl, eksctl and helm.
 
 ## 📙 1. Create the cluster
 
@@ -17,6 +17,10 @@ To create the cluster using the following command
 eksctl create cluster --name=devops-eks-cluster  --region us-east-1 --node-type t2.small --nodes-min 2 --nodes-max 2 --zones=us-east-1a,us-east-1b,us-east-1c
 ```
 
+And update the config using the following command
+```
+aws eks --region us-east-1 update-kubeconfig --name devops-eks-cluster
+```
 
 ## 📜 2. Create the iamserviceaccount for the cluster
 
@@ -39,58 +43,35 @@ eksctl create iamserviceaccount --cluster=devops-eks-cluster --namespace=kube-sy
 
 ## ⚙️ 3. Helm repo setup
 
-Helm is the service that help us packing the kubernetes. 
+Helm is the service that help us packing the kubernetes.
 
-In addition to the php package, you’ll need php-mysql, a PHP module that allows PHP to communicate with MySQL-based databases.
+In addition to use the load-balancer controller, we need to have some setup.
 ```
 kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master" # Install the TargetGroupBinding
 helm repo add eks https://aws.github.io/eks-charts #Deploy the Helm charts
 helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=devops-eks-cluster --set image.tag="v2.2.0" --set serviceAccount.create=false  --set serviceAccount.name=aws-load-balancer-controller --set region=us-east-1
 ```
 
+As same as above, we also need to add the repo of autoscaler to the helm repository
 ```
-helm repo add autoscaler https://kubernetes.github.io/autoscaler 
+helm repo add autoscaler https://kubernetes.github.io/autoscaler
 helm upgrade -i cluster-autoscaler autoscaler/cluster-autoscaler -n kube-system --set clusterName=devops-eks-cluster --set image.tag="v2.2.0" --set serviceAccount.create=false  --set serviceAccount.name=cluster-autoscaler
 ```
 
-## 🛠️ 4. Install Apache server
-
-You need to install Apache server to serve your content.
+After that, we need configure the AWS ALB and Autoscaling to sit in front of Ingress
 ```
-sudo yum install -y httpd
-sudo service httpd start
-sudo systemctl enable httpd
+kubectl -n kube-system rollout status deployment aws-load-balancer-controller
+kubectl -n kube-system rollout status deployment cluster-autoscaler
 ```
 
-## 💡 5. Git clone the website from Github to the root folder of Apache
-
-You need to fork this Github repo first to your Github account.
-
-You need to install git and git clone the github repo to the directory "/var/www/html/" as it is the default root folder of the Apache web server.
+Next we will install the application
 ```
-sudo yum install -y git
-git clone <your-git-repo-url> /var/www/html/
+helm install rmitstore heml-charts
 ```
 
-In the file index.php located in the website directory, we got this PHP script to connect to the MariaDB database.
+## 💻 4. Open the website
+
+After that, you can access to the UI by using this command
 ```
-$link = mysqli_connect(
-    "localhost",
-    "db_admin",
-    "rmit_password",
-    "rmit_store_db"
-);
+kubectl get ingress --all-namespaces
 ```
-Note: Notice the "localhost" and change it accordingly!
-
-## 💻 6. Open the website
-
-Open the website via the public IP address or the domain name via the default port http 80!
-
-Behold, it's time to buy some RMIT glorious merchandise!
-<img src="https://i.imgur.com/xNHx6Ue.png">
-
-Profit💸💰! Sweet and simple to deploy this website!
-
-## 🏆 Author
-- Huynh Nguyen Minh Thong (Tom Huynh) - tomhuynhsg@gmail.com
