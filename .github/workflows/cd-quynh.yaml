@@ -27,7 +27,8 @@ deploy:
   stage: deploy
   image: alpine/helm:3.5.4
   script:
-    - helm upgrade sample-helm-cicd-demo ./helm-charts --install --set-string image.tag=${{ github.sha }} --namespace sample-helm-cicd-demo --timeout 30m0s
+    - kubectl -n kube-system rollout status deployment aws-load-balancer-controller
+    - helm upgrade rmitstore heml-charts --install --set-string image.tag=${{ github.sha }} --timeout 30m0s
     - helm repo update
     - aws eks --region $REGION update-kubeconfig --name $CLUSTER_NAME
 
