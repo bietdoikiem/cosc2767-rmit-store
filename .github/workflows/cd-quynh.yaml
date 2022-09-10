@@ -5,31 +5,43 @@ on:
     branches:
       - 'helm-charts'
 
-stages:
-  - build
-  - deploy
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-variables:
-  IMAGE_NAME: registry.gitlab.com/nextlink/gitlab-presentation/sample-helm-cicd-demo
-  DOCKER_HOST: tcp://localhost:2375/
+      - name: Pull and Run new version of image as Docker container
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.WEBAPP_HOST_PRO }}
+          username: ${{ secrets.WEBAPP_USERNAME_DEV }}
+          key: ${{ secrets.WEBAPP_SSH_KEY_DEV }}
+          port: 22 # Default SSH Port
+          script: |
+            docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
+            docker pull ${{ env.IMAGE_NAME }}:latest
+            docker stop ${{ env.CONTAINER_NAME }}
+            docker rm -f ${{ env.CONTAINER_NAME }}
+            docker run \
+            -e APACHE_DOCUMENT_ROOT='${{ env.DOCUMENT_ROOT }}' \
+            -p ${{ env.APP_PORT }}:80 \
+            -d --name ${{ env.CONTAINER_NAME }} ${{ env.IMAGE_NAME }}:latest
 
-build:
-  stage: build
-  image: docker:18-git
-  services:
-    - docker:18-dind
-  script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
-    - docker build -f Dockerfile --tag ${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA} .
-    - docker push ${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA}
-
-deploy:
-  stage: deploy
-  image: alpine/helm:3.5.4
-  script:
-    - kubectl -n kube-system rollout status deployment aws-load-balancer-controller
-    - helm upgrade rmitstore heml-charts --install --set-string image.tag=${{ github.sha }} --timeout 30m0s
-    - helm repo update
-    - aws eks --region $REGION update-kubeconfig --name $CLUSTER_NAME
+      - name: Update image and deploy on eks
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.WEBAPP_HOST_PRO }}
+          username: ${{ secrets.WEBAPP_USERNAME_DEV }}
+          key: ${{ secrets.WEBAPP_SSH_KEY_DEV }}
+          port: 22 # Default SSH Port
+          script: |
+            helm upgrade rmitstore heml-charts --install --set-string image.tag=${{ github.sha }} --timeout 30m0s
+            helm repo update
+            aws eks --region $REGION update-kubeconfig --name ${{ env.CLUSTER_NAME }}
 
 

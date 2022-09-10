@@ -12,6 +12,8 @@ Servicename: service-rmitstore
 
 Ingressname: ingress-rmitstore
 
+AutoScalingname: autoscale-rmitstore
+
 labels:
   app.kubernetes.io/name: rmitstore
 
@@ -44,9 +46,9 @@ resources: {}
   #   memory: 128Mi
 
 autoscaling:
-  enabled: false
+  enabled: true
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 10
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
