@@ -25,3 +25,9 @@ spec:
         name: {{ .Values.containers.name }}
         ports:
         - containerPort: 80
+        env:
+          - name: "APACHE_DOCUMENT_ROOT"
+            valueFrom:
+              secretKeyRef:
+                key:  apache_root
+                name: {{ .Release.Name }}-auth

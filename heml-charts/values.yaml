@@ -27,12 +27,6 @@ containers:
   name: rmitstore
   image: bietdoikiem/cosc2767-rmit-store
   imagePullPolicy: Always
-  env:
-    - name: "APACHE_DOCUMENT_ROOT"
-      valueFrom:
-        secretKeyRef:
-          key:  apache_root
-          name: {{ .Release.Name }}-auth
 
 annotations:
   kubernetes.io/ingress.class: alb
@@ -50,6 +44,8 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
+apache_root: /var/www/html
 
 autoscaling:
   enabled: true
