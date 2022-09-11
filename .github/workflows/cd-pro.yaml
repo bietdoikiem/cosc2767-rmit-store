@@ -10,7 +10,6 @@ env:
   REGISTRY: docker.io
   IMAGE_NAME: ${{ github.repository }}
   PHP_VERSION: 8
-  DOCUMENT_ROOT: /var/www/html
 
 jobs:
   build:
@@ -82,7 +81,7 @@ jobs:
           key: ${{ secrets.WEBAPP_SSH_KEY_DEV }}
           port: 22 # Default SSH Port
           script: |
-            helm upgrade rmitstore heml-charts --install --set-string image.tag=${{ steps.meta.outputs.tags }} --set apache_root='${{ env.DOCUMENT_ROOT }}' --timeout 30m0s
+            helm upgrade rmitstore heml-charts --install --set-string image.tag=${{ steps.meta.outputs.tags }} --timeout 30m0s
             helm repo update
 
 
