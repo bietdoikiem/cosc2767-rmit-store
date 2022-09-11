@@ -96,15 +96,15 @@
                   for ($row = 0; $row < count($products); $row++)  { ?>
                     <div class="col-md-3 col-sm-5 product-content">
                         <?php echo '<img src="img/' .
-                            $product[$row]["ImageUrl"] .
+                            $products[$row]["ImageUrl"] .
                             '" alt="">'; ?>
                         <div class="media">
                             <div class="media-left">
 
                             </div>
                             <div class="media-body">
-                                <a href="#"><?php echo $product[$row]["Name"]; ?></a>
-                                <p><?php echo $product[$row]["Price"]; ?> AUD</p>
+                                <a href="#"><?php echo $products[$row]["Name"]; ?></a>
+                                <p><?php echo $products[$row]["Price"]; ?> AUD</p>
                             </div>
                         </div>
                     </div>
