@@ -19,6 +19,13 @@ spec:
       labels:
         {{- toYaml .Values.labels| nindent 8 }}
     spec:
+      volumes:
+      - name: store-db-secrets
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: {{ .Values.Secretmanagername }}
       containers:
       - image: {{ .Values.containers.image }}
         imagePullPolicy: {{ .Values.containers.imagePullPolicy }}
@@ -26,8 +33,32 @@ spec:
         ports:
         - containerPort: 80
         env:
-          - name: "APACHE_DOCUMENT_ROOT"
+          - name: RDS_HOSTNAME
             valueFrom:
               secretKeyRef:
-                key:  apache_root
-                name: {{ .Release.Name }}-auth
+                name: rds-credential
+                key: rds_hostname
+          - name: RDS_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: rds-credential
+                key: rds_username
+          - name: RDS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: rds-credential
+                key: rds_password
+          - name: RDS_DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: rds-credential
+                key: rds_dbname
+          - name: RDS_PORT
+            valueFrom:
+              secretKeyRef:
+                name: rds-credential
+                key: rds_port
+        volumeMounts:
+        - name: store-db-secrets
+          mountPath: "/mnt/db/secrets"
+          readOnly: true

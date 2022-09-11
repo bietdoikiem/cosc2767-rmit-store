@@ -12,6 +12,8 @@ Servicename: service-rmitstore
 
 Ingressname: ingress-rmitstore
 
+Secretmanagername: secret-rmitstore
+
 AutoScalingname: autoscale-rmitstore
 
 labels:
@@ -44,8 +46,6 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
-
-apache_root: /var/www/html
 
 autoscaling:
   enabled: true
