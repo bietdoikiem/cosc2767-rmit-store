@@ -54,7 +54,7 @@ In addition to use the load-balancer controller, we need to have some setup.
 ```
 kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master" # Install the TargetGroupBinding
 helm repo add eks https://aws.github.io/eks-charts #Deploy the Helm charts
-helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=devops-eks-cluster --set image.tag="v2.2.0" --set serviceAccount.create=false  --set serviceAccount.name=aws-load-balancer-controller --set region=us-east-1
+helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=devops-eks-cluster --set serviceAccount.create=false  --set serviceAccount.name=aws-load-balancer-controller --set region=us-east-1
 ```
 
 As same as above, we also need to add the repo of autoscaler to the helm repository
@@ -66,11 +66,11 @@ helm install -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-s
 As same as above, we also need to add the repo of secret manager to the helm repository
 ```
 helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
-helm upgrade -i cluster-autoscaler autoscaler/cluster-autoscaler -n kube-system --set clusterName=devops-eks-cluster --set image.tag="v2.2.0" --set s
+helm upgrade -i cluster-autoscaler autoscaler/cluster-autoscaler -n kube-system --set clusterName=devops-eks-cluster --set image.tag="v2.2.0" 
+```
 
 After that, we need configure the AWS ALB and Autoscaling to sit in front of Ingress
 ```
-kubectl -n kube-system rollout status deployment aws-load-balancer-controller
 kubectl -n kube-system rollout status deployment cluster-autoscaler
 ```
 
