@@ -40,9 +40,9 @@ Creating iamserviceaccount for load-balancer group.
 eksctl create iamserviceaccount --cluster=devops-eks-cluster --namespace=kube-system --name=aws-load-balancer-controller --attach-policy-arn=arn:aws:iam::353801319017:policy/AWSLoadBalancerControllerIAMPolicy --override-existing-serviceaccounts --region=us-east-1 --approve
 ```
 
-Creating iamserviceaccount for secret manager
+Creating iamserviceaccount for secret manager with the same namespace of your application
 ```
-eksctl create iamserviceaccount  --cluster=devops-eks-cluster   --namespace=kube-system   --name=secret-manager   --attach-policy-arn=arn:aws:iam::353801319017:policy/SecretManager   --override-existing-serviceaccounts --region=us-east-1 --approve
+eksctl create iamserviceaccount  --cluster=devops-eks-cluster   --namespace=rmitstore   --name=secret-manager   --attach-policy-arn=arn:aws:iam::353801319017:policy/SecretManager   --override-existing-serviceaccounts --region=us-east-1 --approve
 ```
 
 
