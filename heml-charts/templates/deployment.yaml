@@ -19,6 +19,7 @@ spec:
       labels:
         {{- toYaml .Values.labels| nindent 8 }}
     spec:
+      serviceAccountName: secret-manager
       volumes:
       - name: store-db-secrets
         csi:

@@ -12,6 +12,12 @@
             "Effect": "Allow",
             "Action": "iam:TagOpenIDConnectProvider",
             "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "iam:CreateRole",
+            "Resource": "*"
         }
     ]
 }
