@@ -89,51 +89,27 @@
             </div>
             <div class="row rmit-product-section">
               <?php
-              $link = mysqli_connect(
-                  $_ENV["RDS_HOSTNAME"],
-                  $_ENV["RDS_USERNAME"],
-                  $_ENV["RDS_PASSWORD"],
-                  $_ENV["RDS_DB_NAME"],
-                  $_ENV["RDS_PORT"]
-              );
-              if ($link) {
-                  $res = mysqli_query($link, "select * from store;");
-                  while ($row = mysqli_fetch_assoc($res)) { ?>
+                require_once './src/Task.php';
+                $task = new Task();
+                $products = $task->getAllTasks();
+          
+                  for ($row = 0; $row < count($products); $row++)  { ?>
+                    <div class="col-md-3 col-sm-5 product-content">
+                        <?php echo '<img src="img/' .
+                            $products[$row]["ImageUrl"] .
+                            '" alt="">'; ?>
+                        <div class="media">
+                            <div class="media-left">
 
-
-                <div class="col-md-3 col-sm-5 product-content">
-                    <?php echo '<img src="img/' .
-                        $row["ImageUrl"] .
-                        '" alt="">'; ?>
-                    <div class="media">
-                        <div class="media-left">
-
-                        </div>
-                        <div class="media-body">
-                            <a href="#"><?php echo $row["Name"]; ?></a>
-                            <p><?php echo $row["Price"]; ?> AUD</p>
+                            </div>
+                            <div class="media-body">
+                                <a href="#"><?php echo $products[$row]["Name"]; ?></a>
+                                <p><?php echo $products[$row]["Price"]; ?> AUD</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <?php }
-              } else {
-                   ?>
-                <div style="width: 100%">
-                <div class="error-content">
-
-                    <h1>Database connection error</h1>
-                    <p>
-                    <?php echo mysqli_connect_errno() .
-                        ":" .
-                        mysqli_connect_error(); ?>
-                    </p>
-                  </div>
-                  </div>
-                  <?php
-              }
+                    <?php }
               ?>
-
 
             </div>
         </section>
