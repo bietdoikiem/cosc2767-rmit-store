@@ -6,7 +6,6 @@ on:
       - 'dev'
     paths-ignore:
       - '**.md'
-      - '.github/**'
 
 env:
   # Docker Hub
