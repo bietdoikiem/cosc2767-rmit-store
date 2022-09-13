@@ -1,0 +1,59 @@
+# Default values for heml-charts.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+Namespacename: rmitstore
+
+Deploymentname: deployment-rmitstore
+
+Servicename: service-rmitstore
+
+Ingressname: ingress-rmitstore
+
+Secretmanagername: secret-rmitstore
+
+AutoScalingname: autoscale-rmitstore
+
+labels:
+  app.kubernetes.io/name: rmitstore
+
+matchLabels:
+  app.kubernetes.io/name: rmitstore
+
+selector:
+  app.kubernetes.io/name: rmitstore
+
+containers:
+  name: rmitstore
+  image: bietdoikiem/cosc2767-rmit-store
+  imagePullPolicy: Always
+
+annotations:
+  kubernetes.io/ingress.class: alb
+  alb.ingress.kubernetes.io/scheme: internet-facing
+  alb.ingress.kubernetes.io/target-type: instance
+  nginx.org/proxy-connect-timeout: 3600s
+  nginx.org/proxy-read-timeout: 3600s
+  nginx.org/proxy-send-timeout: 3600s
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
