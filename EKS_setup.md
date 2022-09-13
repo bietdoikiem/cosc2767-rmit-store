@@ -60,13 +60,13 @@ helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n
 As same as above, we also need to add the repo of autoscaler to the helm repository
 ```
 helm repo add autoscaler https://kubernetes.github.io/autoscaler
-helm install -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver
+helm upgrade -i cluster-autoscaler autoscaler/cluster-autoscaler -n kube-system --set clusterName=devops-eks-cluster --set image.tag="v2.2.0"
 ```
 
 As same as above, we also need to add the repo of secret manager to the helm repository
 ```
 helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
-helm upgrade -i cluster-autoscaler autoscaler/cluster-autoscaler -n kube-system --set clusterName=devops-eks-cluster --set image.tag="v2.2.0" 
+helm install -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --set clusterName=devops-eks-cluster
 ```
 
 After that, we need configure the AWS ALB and Autoscaling to sit in front of Ingress
