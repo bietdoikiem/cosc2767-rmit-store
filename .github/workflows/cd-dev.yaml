@@ -23,7 +23,7 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: Checkout repository
+      - name: Checkout branch
         uses: actions/checkout@v3
 
       - name: Pull and Run new version of image as Docker container
@@ -46,4 +46,25 @@ jobs:
             -e RDS_DB_NAME='${{ secrets.RDS_DB_NAME_DEV }}' \
             -e RDS_PORT='${{ secrets.RDS_PORT_DEV }}' \
             -p ${{ env.APP_PORT }}:80 \
-            -d --name ${{ env.CONTAINER_NAME }} ${{ env.IMAGE_NAME }}:latest
+            --name ${{ env.CONTAINER_NAME }} -d ${{ env.IMAGE_NAME }}:latest
+
+  ui-test-dev:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+
+      - name: Setup Python3
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: Setup and Run test
+        working-directory: ./test/uitests
+        run: |
+          chmod +x setup_test.sh
+          ./setup_test.sh
+          pipenv run python -m pytest

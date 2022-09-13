@@ -20,5 +20,7 @@ for option in options:
 
 driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 
-driver.get('http://54.152.49.220/')
+#driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+
+driver.get('http://54.85.101.87/')
 driver.quit()
