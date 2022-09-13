@@ -20,7 +20,7 @@ def browser():
 
   driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                             options=chrome_options)
-  driver.set_page_load_timeout(1)
+  driver.set_page_load_timeout(30)
   driver.get(url)
   yield driver
   driver.quit()
