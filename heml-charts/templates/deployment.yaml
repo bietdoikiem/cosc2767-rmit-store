@@ -28,7 +28,7 @@ spec:
           volumeAttributes:
             secretProviderClass: {{ .Values.Secretmanagername }}
       containers:
-      - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+      - image: {{ .Values.containers.image }}
         imagePullPolicy: {{ .Values.containers.imagePullPolicy }}
         name: {{ .Values.containers.name }}
         ports:
