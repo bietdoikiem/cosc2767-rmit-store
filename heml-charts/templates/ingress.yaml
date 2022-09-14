@@ -6,8 +6,14 @@ metadata:
   annotations:
     {{- toYaml .Values.annotations| nindent 4 }}
 spec:
+  defaultBackend:
+    service:
+      name: {{ .Values.Servicename }}
+      port:
+        number: 80
   rules:
-    - http:
+    - host: rmitstore.group7.com
+      http:
         paths:
           - path: /
             pathType: "Prefix"

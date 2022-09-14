@@ -26,7 +26,6 @@ selector:
   app.kubernetes.io/name: rmitstore
 
 containers:
-  name: rmitstore
   image: bietdoikiem/cosc2767-rmit-store
   imagePullPolicy: Always
 
