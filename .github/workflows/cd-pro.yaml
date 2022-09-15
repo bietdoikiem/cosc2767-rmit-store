@@ -19,6 +19,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      commit_tag: ${{ steps.meta.outputs.commit_tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,6 +37,7 @@ jobs:
           TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${SHORTREF}"
           # Set output parameters.
           echo ::set-output name=tags::${TAGS}
+          echo ::set-output name=commit_tag::${SHORTREF}
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
 
       - name: Setup Docker buildx
@@ -77,5 +80,5 @@ jobs:
           port: 22 # Default SSH Port
           script: |
             cd cosc2767-rmit-store
-            helm upgrade rmitstore heml-charts --install --set-string image.tag=${{ steps.meta.outputs.tags }} --timeout 30m0s
+            helm upgrade rmitstore heml-charts --install --set-string image.tag=${{ needs.build.outputs.commit_tag }} --timeout 30m0s
             helm repo update

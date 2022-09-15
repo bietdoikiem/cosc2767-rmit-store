@@ -22,6 +22,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      commit_tag: ${{ steps.meta.outputs.commit_tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -38,6 +40,7 @@ jobs:
           TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${SHORTREF}"
           # Set output parameters.
           echo ::set-output name=tags::${TAGS}
+          echo ::set-output name=commit_tag::${SHORTREF}
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
 
       - name: Setup Docker buildx
@@ -79,7 +82,7 @@ jobs:
           port: 22 # Default SSH Port
           script: |
             docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
-            docker pull ${{ env.IMAGE_NAME }}:latest
+            docker pull ${{ env.IMAGE_NAME }}:${{ needs.build.outputs.commit_tag }}
             docker stop ${{ env.CONTAINER_NAME }}
             docker rm -f ${{ env.CONTAINER_NAME }}
             docker run \
@@ -90,7 +93,7 @@ jobs:
             -e RDS_DB_NAME='${{ secrets.RDS_DB_NAME_DEV }}' \
             -e RDS_PORT='${{ secrets.RDS_PORT_DEV }}' \
             -p ${{ env.APP_PORT }}:80 \
-            --name ${{ env.CONTAINER_NAME }} -d ${{ env.IMAGE_NAME }}:latest
+            --name ${{ env.CONTAINER_NAME }} -d ${{ env.IMAGE_NAME }}:${{ needs.build.outputs.commit_tag }}
 
   ui-test:
     runs-on: ubuntu-latest
