@@ -82,7 +82,7 @@ jobs:
           port: 22 # Default SSH Port
           script: |
             cd cosc2767-rmit-store
-            helm upgrade rmitstore heml-charts --install --set-string image.tag=${{ steps.meta.outputs.tags }} --timeout 30m0s
+            helm upgrade rmitstore heml-charts --install --set-string image.tag=${GITHUB_SHA::7} --timeout 30m0s
             helm repo update
 
 
