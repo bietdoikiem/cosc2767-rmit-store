@@ -30,14 +30,12 @@ containers:
   image: bietdoikiem/cosc2767-rmit-store
   imagePullPolicy: IfNotPresent
 
-global:
-  image:
-    # image repository to deploy image(s) with.
-    repository: bietdoikiem/cosc2767-rmit-store
-    # image tag to deploy image(s) with.
-    tag: latest
-    pullPolicy: IfNotPresent
-  no_internalIngress: true
+image:
+  # image repository to deploy image(s) with.
+  repository: bietdoikiem/cosc2767-rmit-store
+  # image tag to deploy image(s) with.
+  tag: latest
+  pullPolicy: IfNotPresent
 
 
 annotations:
