@@ -68,7 +68,7 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3
 
-      - name: Pull and Run new version of image as Docker container
+      - name: Pull and Run new version of image as Docker container via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.WEBAPP_HOST_DEV }}

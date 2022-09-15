@@ -68,7 +68,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Update image and deploy on eks
+      - name: Update image and deploy on eks via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.WEBAPP_HOST_PRO }}
