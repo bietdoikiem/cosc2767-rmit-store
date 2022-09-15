@@ -38,6 +38,7 @@ jobs:
           TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${SHORTREF}"
           # Set output parameters.
           echo ::set-output name=tags::${TAGS}
+          echo ::set-output name=commit_tag::${SHORTREF}
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
 
       - name: Setup Docker buildx
@@ -79,7 +80,7 @@ jobs:
           port: 22 # Default SSH Port
           script: |
             docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
-            docker pull ${{ env.IMAGE_NAME }}:latest
+            docker pull ${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.commit_tag }}
             docker stop ${{ env.CONTAINER_NAME }}
             docker rm -f ${{ env.CONTAINER_NAME }}
             docker run \
