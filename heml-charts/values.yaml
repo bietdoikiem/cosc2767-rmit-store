@@ -28,7 +28,17 @@ selector:
 containers:
   name: rmitstore
   image: bietdoikiem/cosc2767-rmit-store
-  imagePullPolicy: Always
+  imagePullPolicy: IfNotPresent
+
+global:
+  image:
+    # image repository to deploy image(s) with.
+    repository: bietdoikiem/cosc2767-rmit-store
+    # image tag to deploy image(s) with.
+    tag: latest
+    pullPolicy: IfNotPresent
+  no_internalIngress: true
+
 
 annotations:
   kubernetes.io/ingress.class: alb
