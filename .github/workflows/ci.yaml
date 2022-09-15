@@ -1,12 +1,7 @@
 name: ci
 
+# Trigger on making pull request (PR) only
 on:
-  push:
-    branches:
-      - 'feat'
-    paths-ignore:
-      - '**.md'
-      - '.github/**'
   pull_request:
     branches:
       - 'feat'
@@ -60,12 +55,6 @@ jobs:
           # Set output parameters.
           echo ::set-output name=tags::${TAGS}
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
-      # Install signing lib for Docker image (except on PR)
-      - name: Install cosign
-        if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@main
-        with:
-          cosign-release: 'v1.11.0'
 
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
@@ -79,12 +68,11 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      # Build and Push image (except on PR)
-      - name: Build and Push Docker image to Registry
-        id: build-and-push
+      # Build Dockerfile to image
+      - name: Build from Dockerfile to image
+        id: build-image
         uses: docker/build-push-action@v3
         with:
           file: ./bin/php${{ env.PHP_VERSION }}/Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
+          push: false
           tags: ${{ steps.meta.outputs.tags }}
-
