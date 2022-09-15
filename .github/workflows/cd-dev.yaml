@@ -93,7 +93,7 @@ jobs:
             -e RDS_DB_NAME='${{ secrets.RDS_DB_NAME_DEV }}' \
             -e RDS_PORT='${{ secrets.RDS_PORT_DEV }}' \
             -p ${{ env.APP_PORT }}:80 \
-            --name ${{ env.CONTAINER_NAME }} -d ${{ env.IMAGE_NAME }}:latest
+            --name ${{ env.CONTAINER_NAME }} -d ${{ env.IMAGE_NAME }}:${{ needs.build.outputs.commit_tag }}
 
   ui-test:
     runs-on: ubuntu-latest
