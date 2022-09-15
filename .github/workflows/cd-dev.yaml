@@ -22,6 +22,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      commit_tag: ${{ steps.meta.outputs.commit_tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -80,7 +82,7 @@ jobs:
           port: 22 # Default SSH Port
           script: |
             docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
-            docker pull ${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.commit_tag }}
+            docker pull ${{ env.IMAGE_NAME }}:${{ needs.build.outputs.commit_tag }}
             docker stop ${{ env.CONTAINER_NAME }}
             docker rm -f ${{ env.CONTAINER_NAME }}
             docker run \
