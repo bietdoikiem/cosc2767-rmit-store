@@ -10,6 +10,7 @@ on:
 env:
   # Docker Hub
   REGISTRY: docker.io
+  PHP_VERSION: 8
   IMAGE_NAME: ${{ github.repository }}
   CONTAINER_NAME: store-webapp
   APP_PORT: 80
