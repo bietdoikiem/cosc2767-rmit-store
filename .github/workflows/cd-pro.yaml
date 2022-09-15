@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - 'main'
+    paths-ignore:
+      - '**.md'
 
 env:
   # Docker Hub
@@ -35,13 +37,6 @@ jobs:
           echo ::set-output name=tags::${TAGS}
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
 
-      # Install signing lib for Docker image (except on PR)
-      - name: Install cosign
-        if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@main
-        with:
-          cosign-release: 'v1.11.0'
-
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
 
@@ -54,16 +49,16 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      # Build and Push image (except on PR)
+      # Build and Push image
       - name: Build and Push Docker image to Registry
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
           file: ./bin/php${{ env.PHP_VERSION }}/Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
 
-  deploy-pro:
+  deploy:
     runs-on: ubuntu-latest
     needs: build
     permissions:
@@ -73,7 +68,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Update image and deploy on eks
+      - name: Update image and deploy on eks via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.WEBAPP_HOST_PRO }}
@@ -81,7 +76,6 @@ jobs:
           key: ${{ secrets.WEBAPP_SSH_KEY_DEV }}
           port: 22 # Default SSH Port
           script: |
+            cd cosc2767-rmit-store
             helm upgrade rmitstore heml-charts --install --set-string image.tag=${{ steps.meta.outputs.tags }} --timeout 30m0s
             helm repo update
-
-

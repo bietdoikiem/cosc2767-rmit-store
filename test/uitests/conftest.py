@@ -8,7 +8,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 @pytest.fixture
 def browser():
   #change web url here if needed test local
-  url = f"http://54.85.101.87/"
+  url = f"http://35.153.46.184/"
   chrome_options = Options()
 
   options = [

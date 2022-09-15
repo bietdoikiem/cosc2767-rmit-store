@@ -32,17 +32,17 @@ eksctl utils associate-iam-oidc-provider --region=us-east-1 --cluster=devops-eks
 
 Creating iamserviceaccount for auto-scaling group.
 ```
-eksctl create iamserviceaccount  --cluster=devops-eks-cluster   --namespace=kube-system   --name=cluster-autoscaler   --attach-policy-arn=arn:aws:iam::353801319017:policy/AmazonEKSClusterAutoscalerPolicy --region=us-east-1   --override-existing-serviceaccounts --approve
+eksctl create iamserviceaccount  --cluster=devops-eks-cluster   --namespace=kube-system   --name=cluster-autoscaler   --attach-policy-arn=arn:aws:iam::855185222224:policy/AmazonEKSClusterAutoscalerPolicy --region=us-east-1   --override-existing-serviceaccounts --approve
 ```
 
 Creating iamserviceaccount for load-balancer group.
 ```
-eksctl create iamserviceaccount --cluster=devops-eks-cluster --namespace=kube-system --name=aws-load-balancer-controller --attach-policy-arn=arn:aws:iam::353801319017:policy/AWSLoadBalancerControllerIAMPolicy --override-existing-serviceaccounts --region=us-east-1 --approve
+eksctl create iamserviceaccount --cluster=devops-eks-cluster --namespace=kube-system --name=aws-load-balancer-controller --attach-policy-arn=arn:aws:iam::855185222224:policy/AWSLoadBalancerControllerIAMPolicy --override-existing-serviceaccounts --region=us-east-1 --approve
 ```
 
 Creating iamserviceaccount for secret manager with the same namespace of your application
 ```
-eksctl create iamserviceaccount  --cluster=devops-eks-cluster   --namespace=rmitstore   --name=secret-manager   --attach-policy-arn=arn:aws:iam::353801319017:policy/SecretManager   --override-existing-serviceaccounts --region=us-east-1 --approve
+eksctl create iamserviceaccount  --cluster=devops-eks-cluster   --namespace=rmitstore   --name=secret-manager   --attach-policy-arn=arn:aws:iam::855185222224:policy/SecretManager  --override-existing-serviceaccounts --region=us-east-1 --approve
 ```
 
 
@@ -60,18 +60,23 @@ helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n
 As same as above, we also need to add the repo of autoscaler to the helm repository
 ```
 helm repo add autoscaler https://kubernetes.github.io/autoscaler
-helm install -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver
+helm upgrade -i cluster-autoscaler autoscaler/cluster-autoscaler -n kube-system --set clusterName=devops-eks-cluster --set image.tag="v2.2.0"
 ```
 
 As same as above, we also need to add the repo of secret manager to the helm repository
 ```
+kubectl apply -f https://raw.githubusercontent.com/aws/secrets-store-csi-driver-provider-aws/main/deployment/aws-provider-installer.yaml
 helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
-helm upgrade -i cluster-autoscaler autoscaler/cluster-autoscaler -n kube-system --set clusterName=devops-eks-cluster --set image.tag="v2.2.0" 
+helm install -n kube-system csi-secrets-store \
+  --set syncSecret.enabled=true \
+  --set enableSecretRotation=true \
+  secrets-store-csi-driver/secrets-store-csi-driver --set clusterName=devops-eks-cluster
 ```
 
 After that, we need configure the AWS ALB and Autoscaling to sit in front of Ingress
 ```
 kubectl -n kube-system rollout status deployment cluster-autoscaler
+kubectl -n kube-system rollout status deployment aws-load-balancer-controller
 ```
 
 Next we will install the application
