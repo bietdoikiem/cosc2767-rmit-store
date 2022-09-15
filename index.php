@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>RMIT Store | Group 7</title>
+        <title>Avalanche Store | Group 7</title>
 
         <!-- Favicon -->
         <link rel="icon" href="img/favicon.jpg" type="image/png" />
@@ -76,7 +76,7 @@
             <div class="slider_inner">
                 <div class="image-change">
                     <h2 class="wow fadeInUp animated">Global University</h2>
-                    <h5 class="wow fadeIn animated" data-wow-delay="0.2s">Buy everything at Our Store!</h5>
+                    <h5 class="wow fadeIn animated" data-wow-delay="0.2s">Buy swags at Our Store!</h5>
                     <a class="learn-more wow fadeInU" data-wow-delay="0.3s" href="#item-list">Buy Now!</a>
                 </div>
             </div>
